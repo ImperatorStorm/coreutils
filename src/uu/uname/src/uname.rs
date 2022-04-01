@@ -8,7 +8,7 @@
 
 // last synced with: uname (GNU coreutils) 8.21
 
-// spell-checker:ignore (ToDO) nodename kernelname kernelrelease kernelversion sysname hwplatform mnrsv
+// spell-checker:ignore (ToDO) nodename kernelname kernelrelease kernelversion sysname hwplatform mnrsv uclibc clibc
 
 use clap::{crate_version, Arg, Command};
 use platform_info::*;
@@ -34,7 +34,19 @@ pub mod options {
 
 #[cfg(all(target_os = "linux", any(target_env = "gnu", target_env = "")))]
 const HOST_OS: &str = "GNU/Linux";
-#[cfg(all(target_os = "linux", not(any(target_env = "gnu", target_env = ""))))]
+#[cfg(all(target_os = "linux", any(target_env = "musl", target_env = "")))]
+const HOST_OS: &str = "Musl/Linux";
+#[cfg(all(target_os = "linux", any(target_env = "uclibc", target_env = "")))]
+const HOST_OS: &str = "uClibc/Linux";
+#[cfg(all(
+    target_os = "linux",
+    not(any(
+        target_env = "gnu",
+        target_env = "",
+        target_env = "uclibc",
+        target_env = "musl"
+    ))
+))]
 const HOST_OS: &str = "Linux";
 #[cfg(target_os = "windows")]
 const HOST_OS: &str = "Windows NT";
