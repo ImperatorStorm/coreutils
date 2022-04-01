@@ -69,29 +69,24 @@ fn test_uname_operating_system() {
         .arg("--operating-system")
         .succeeds()
         .stdout_is("Fuchsia\n");
-    #[cfg(all(target_os = "linux", any(target_env = "gnu", target_env = "")))]
+    #[cfg(all(target_os = "linux", any(target_env = "gnu")))]
     new_ucmd!()
         .arg("--operating-system")
         .succeeds()
         .stdout_is("GNU/Linux\n");
-    #[cfg(all(target_os = "linux", any(target_env = "musl", target_env = "")))]
+    #[cfg(all(target_os = "linux", any(target_env = "musl")))]
     new_ucmd!()
         .arg("--operating-system")
         .succeeds()
         .stdout_is("Musl/Linux\n");
-    #[cfg(all(target_os = "linux", any(target_env = "uclibc", target_env = "")))]
+    #[cfg(all(target_os = "linux", any(target_env = "uclibc")))]
     new_ucmd!()
         .arg("--operating-system")
         .succeeds()
         .stdout_is("uClibc/Linux\n");
     #[cfg(all(
         target_os = "linux",
-        not(any(
-            target_env = "musl",
-            target_env = "gnu",
-            target_env = "uclibc",
-            target_env = ""
-        ))
+        not(any(target_env = "musl", target_env = "gnu", target_env = "uclibc"))
     ))]
     new_ucmd!()
         .arg("--operating-system")

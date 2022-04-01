@@ -32,20 +32,15 @@ pub mod options {
     pub static OS: &str = "operating-system";
 }
 
-#[cfg(all(target_os = "linux", any(target_env = "gnu", target_env = "")))]
+#[cfg(all(target_os = "linux", any(target_env = "gnu")))]
 const HOST_OS: &str = "GNU/Linux";
-#[cfg(all(target_os = "linux", any(target_env = "musl", target_env = "")))]
+#[cfg(all(target_os = "linux", any(target_env = "musl")))]
 const HOST_OS: &str = "Musl/Linux";
-#[cfg(all(target_os = "linux", any(target_env = "uclibc", target_env = "")))]
+#[cfg(all(target_os = "linux", any(target_env = "uclibc")))]
 const HOST_OS: &str = "uClibc/Linux";
 #[cfg(all(
     target_os = "linux",
-    not(any(
-        target_env = "gnu",
-        target_env = "",
-        target_env = "uclibc",
-        target_env = "musl"
-    ))
+    not(any(target_env = "gnu", target_env = "uclibc", target_env = "musl"))
 ))]
 const HOST_OS: &str = "Linux";
 #[cfg(target_os = "windows")]
